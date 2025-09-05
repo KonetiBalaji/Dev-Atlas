@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CreditCard, Download, ExternalLink, Check, X } from 'lucide-react';
+import { CreditCard, Download, Check, X } from 'lucide-react';
 import { api } from '@/lib/api';
 import toast from 'react-hot-toast';
 
