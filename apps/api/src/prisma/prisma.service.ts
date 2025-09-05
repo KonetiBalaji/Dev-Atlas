@@ -2,32 +2,24 @@
 // Created by Balaji Koneti
 
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '@devatlas/db';
+import { PrismaService as BasePrismaService } from '@devatlas/db';
 
 @Injectable()
-export class PrismaService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
-  constructor() {
-    super({
-      log: ['query', 'info', 'warn', 'error'],
-    });
-  }
-
+export class PrismaService extends BasePrismaService implements OnModuleInit, OnModuleDestroy {
   async onModuleInit() {
     // Connect to database
-    await this.$connect();
-    console.log('✅ Connected to database');
+    await this.connect();
   }
 
   async onModuleDestroy() {
     // Disconnect from database
-    await this.$disconnect();
-    console.log('🔌 Disconnected from database');
+    await this.disconnect();
   }
 
   /**
    * Clean disconnect for graceful shutdown
    */
-  async enableShutdownHooks(app: any) {
+  override async enableShutdownHooks(app: any) {
     (this as any).$on('beforeExit', async () => {
       await app.close();
     });

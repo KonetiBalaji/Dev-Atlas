@@ -11,7 +11,7 @@ import { CreateCheckoutSessionDto, CreateCustomerPortalDto } from './dto/billing
 export class BillingService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly _configService: ConfigService,
+    private readonly _configService: ConfigService, // eslint-disable-line @typescript-eslint/no-unused-vars
     // private readonly stripeService: StripeService,
   ) {}
 

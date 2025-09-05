@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GithubStrategy extends PassportStrategy(Strategy, 'github') {
-  constructor(private readonly _configService: ConfigService) {
+  constructor(private readonly _configService: ConfigService) { // eslint-disable-line @typescript-eslint/no-unused-vars
     super({
       clientID: _configService.get<string>('GITHUB_OAUTH_CLIENT_ID'),
       clientSecret: _configService.get<string>('GITHUB_OAUTH_CLIENT_SECRET'),

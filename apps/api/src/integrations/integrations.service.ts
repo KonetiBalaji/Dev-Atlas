@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class IntegrationsService {
-  constructor(private readonly _prisma: PrismaService) {}
+  constructor(private readonly _prisma: PrismaService) {} // eslint-disable-line @typescript-eslint/no-unused-vars
 
   /**
    * Get GitHub integration status

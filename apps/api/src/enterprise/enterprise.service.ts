@@ -14,7 +14,7 @@ export class EnterpriseService {
   // private auditLogger: AuditLogger;
   // private ssoService: SSOService;
 
-  constructor(private readonly _prisma: PrismaService) {
+  constructor(private readonly _prisma: PrismaService) { // eslint-disable-line @typescript-eslint/no-unused-vars
     // Stub implementations
     // this.apiKeyService = new ApiKeyService();
     // this.weightProfileService = new WeightProfileService();
@@ -68,7 +68,8 @@ export class EnterpriseService {
 
   async createApiKey(orgId: string, dto: CreateApiKeyDto, createdBy: string) {
     try {
-      const { apiKey, plainKey } = await this.apiKeyService.createApiKey(orgId, dto);
+      const result = await this.apiKeyService.createApiKey(orgId, dto);
+      const { id: apiKey, plainKey } = result;
 
       // In a real implementation, this would save to database
       // For now, just return the created key
@@ -76,7 +77,7 @@ export class EnterpriseService {
       this.auditLogger.logConfigChange('api_key_created', {
         orgId,
         userId: createdBy,
-        resourceId: apiKey.id,
+        resourceId: apiKey,
         resourceType: 'api_key',
         newValue: { name: dto.name, permissions: dto.permissions },
       });

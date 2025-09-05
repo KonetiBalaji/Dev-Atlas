@@ -193,6 +193,10 @@ export class GitHubWebhookService {
   private async findProjectsByRepository(repositoryFullName: string): Promise<any[]> {
     const [owner] = repositoryFullName.split('/');
     
+    if (!owner) {
+      return [];
+    }
+    
     // Find projects by owner (user or organization)
     const projects = await this.prisma.project.findMany({
       where: {
@@ -344,7 +348,8 @@ export class GitHubWebhookService {
     let lastWebhookAt: Date | null = null;
 
     for (const webhook of webhooks) {
-      const type = webhook.metadata?.type || 'unknown';
+      const details = webhook.details as any;
+      const type = details?.type || 'unknown';
       webhooksByType[type] = (webhooksByType[type] || 0) + 1;
       
       if (!lastWebhookAt || webhook.createdAt > lastWebhookAt) {

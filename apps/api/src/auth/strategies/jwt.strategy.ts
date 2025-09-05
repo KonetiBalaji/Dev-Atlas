@@ -11,7 +11,7 @@ import { AuthService, JwtPayload } from '../auth.service';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private authService: AuthService,
-    private readonly _configService: ConfigService,
+    private readonly _configService: ConfigService, // eslint-disable-line @typescript-eslint/no-unused-vars
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
