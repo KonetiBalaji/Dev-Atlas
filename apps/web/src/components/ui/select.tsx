@@ -7,9 +7,9 @@ import { ChevronDown } from 'lucide-react';
 
 interface SelectContextType {
   value: string;
-  onValueChange: (value: string) => void;
+  onValueChange: (_value: string) => void;
   open: boolean;
-  setOpen: (open: boolean) => void;
+  setOpen: (_open: boolean) => void;
 }
 
 const SelectContext = React.createContext<SelectContextType | null>(null);
@@ -29,14 +29,14 @@ interface SelectProps {
   children: React.ReactNode;
 }
 
-const Select = ({ value, defaultValue, onValueChange, children }: SelectProps) => {
+const Select = ({ value: _value, defaultValue, onValueChange, children }: SelectProps) => {
   const [internalValue, setInternalValue] = React.useState(defaultValue || '');
   const [open, setOpen] = React.useState(false);
   
-  const currentValue = value !== undefined ? value : internalValue;
+  const currentValue = _value !== undefined ? _value : internalValue;
   
   const handleValueChange = (newValue: string) => {
-    if (value === undefined) {
+    if (_value === undefined) {
       setInternalValue(newValue);
     }
     onValueChange?.(newValue);

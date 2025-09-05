@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { api } from '@/lib/api';
 
 export function AnalysesList() {
-  const { data: _analyses = [], isLoading } = useQuery({
+  const { data: analyses = [], isLoading } = useQuery({
     queryKey: ['analyses'],
     queryFn: () => api.analyses.getStats(),
   });

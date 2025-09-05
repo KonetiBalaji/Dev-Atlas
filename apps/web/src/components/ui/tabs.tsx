@@ -22,7 +22,7 @@ const Tabs = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElemen
 );
 Tabs.displayName = 'Tabs';
 
-const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { activeTab?: string; setActiveTab?: (tab: string) => void }>(
+const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { activeTab?: string; setActiveTab?: (_tab: string) => void }>(
   ({ className, activeTab: _activeTab, setActiveTab: _setActiveTab, children, ...props }, ref) => (
     <div
       ref={ref}
@@ -40,7 +40,7 @@ const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 );
 TabsList.displayName = 'TabsList';
 
-const TabsTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { value: string; activeTab?: string; setActiveTab?: (tab: string) => void }>(
+const TabsTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement> & { value: string; activeTab?: string; setActiveTab?: (_tab: string) => void }>(
   ({ className, value, activeTab: _activeTab, setActiveTab: _setActiveTab, children, ...props }, ref) => (
     <button
       ref={ref}
