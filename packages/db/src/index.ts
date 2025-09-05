@@ -4,6 +4,9 @@
 export { PrismaClient } from '@prisma/client';
 export * from '@prisma/client';
 
+// Re-export PrismaService for convenience
+export { PrismaService } from './prisma.service';
+
 // Re-export types for convenience
 export type {
   Org,
@@ -16,5 +19,7 @@ export type {
   Embedding,
   Job,
   AuditLog,
-  Role,
 } from '@prisma/client';
+
+// Re-export enums as values
+export { Role } from '@prisma/client';

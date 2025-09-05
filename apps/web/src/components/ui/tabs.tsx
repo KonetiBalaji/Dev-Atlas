@@ -31,7 +31,7 @@ const TabsList = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
     >
       {React.Children.map(children, (child) => {
         if (React.isValidElement(child)) {
-          return React.cloneElement(child, { activeTab, setActiveTab } as any);
+          return React.cloneElement(child, { activeTab: _activeTab, setActiveTab: _setActiveTab } as any);
         }
         return child;
       })}

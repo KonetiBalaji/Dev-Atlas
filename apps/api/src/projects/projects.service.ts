@@ -5,6 +5,7 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { Project, Analysis } from '@devatlas/db';
 
 @Injectable()
 export class ProjectsService {
@@ -13,7 +14,7 @@ export class ProjectsService {
   /**
    * Create a new project
    */
-  async create(createProjectDto: CreateProjectDto, orgId: string) {
+  async create(createProjectDto: CreateProjectDto, orgId: string): Promise<Project & { analyses: Analysis[] }> {
     // Check if project already exists
     const existingProject = await this.prisma.project.findUnique({
       where: {
@@ -45,7 +46,7 @@ export class ProjectsService {
   /**
    * Get all projects for an organization
    */
-  async findAll(orgId: string) {
+  async findAll(orgId: string): Promise<Array<Project & { analyses: Analysis[]; _count: { analyses: number } }>> {
     return this.prisma.project.findMany({
       where: { orgId },
       include: {
@@ -64,7 +65,7 @@ export class ProjectsService {
   /**
    * Get a specific project
    */
-  async findOne(id: string, orgId: string) {
+  async findOne(id: string, orgId: string): Promise<Project & { analyses: Array<Analysis & { score: any; _count: { repos: number } }> }> {
     const project = await this.prisma.project.findFirst({
       where: { id, orgId },
       include: {
@@ -90,8 +91,8 @@ export class ProjectsService {
   /**
    * Update a project
    */
-  async update(id: string, updateProjectDto: UpdateProjectDto, orgId: string) {
-    const project = await this.findOne(id, orgId);
+  async update(id: string, updateProjectDto: UpdateProjectDto, orgId: string): Promise<Project> {
+    await this.findOne(id, orgId);
 
     return this.prisma.project.update({
       where: { id },
@@ -102,8 +103,8 @@ export class ProjectsService {
   /**
    * Delete a project
    */
-  async remove(id: string, orgId: string) {
-    const project = await this.findOne(id, orgId);
+  async remove(id: string, orgId: string): Promise<Project> {
+    await this.findOne(id, orgId);
 
     return this.prisma.project.delete({
       where: { id },
@@ -113,7 +114,7 @@ export class ProjectsService {
   /**
    * Get project statistics
    */
-  async getStats(orgId: string) {
+  async getStats(orgId: string): Promise<{ totalProjects: number; activeProjects: number; totalAnalyses: number }> {
     const [totalProjects, activeProjects, totalAnalyses] = await Promise.all([
       this.prisma.project.count({ where: { orgId } }),
       this.prisma.project.count({ where: { orgId, status: 'analyzing' } }),

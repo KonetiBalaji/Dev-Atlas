@@ -24,7 +24,7 @@ export class IntegrationsController {
   ) {
     try {
       // Verify webhook signature
-      const secret = process.env.GITHUB_WEBHOOK_SECRET;
+      const secret = process.env['GITHUB_WEBHOOK_SECRET'];
       if (secret && !this.webhookService.verifySignature(
         JSON.stringify(payload),
         signature,

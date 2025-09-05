@@ -1,25 +1,25 @@
 // DevAtlas Billing DTOs
 // Created by Balaji Koneti
 
-import { IsString, IsUrl, IsOptional } from 'class-validator';
+import { IsString, IsUrl } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCheckoutSessionDto {
   @ApiProperty({ description: 'Stripe price ID' })
   @IsString()
-  priceId: string;
+  priceId!: string;
 
   @ApiProperty({ description: 'Success URL' })
   @IsUrl()
-  successUrl: string;
+  successUrl!: string;
 
   @ApiProperty({ description: 'Cancel URL' })
   @IsUrl()
-  cancelUrl: string;
+  cancelUrl!: string;
 }
 
 export class CreateCustomerPortalDto {
   @ApiProperty({ description: 'Return URL' })
   @IsUrl()
-  returnUrl: string;
+  returnUrl!: string;
 }

@@ -11,12 +11,12 @@ import { AuthService, JwtPayload } from '../auth.service';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     private authService: AuthService,
-    private configService: ConfigService,
+    private readonly _configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<string>('JWT_SECRET'),
+      secretOrKey: _configService.get<string>('JWT_SECRET'),
     });
   }
 

@@ -28,7 +28,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
    * Clean disconnect for graceful shutdown
    */
   async enableShutdownHooks(app: any) {
-    this.$on('beforeExit', async () => {
+    (this as any).$on('beforeExit', async () => {
       await app.close();
     });
   }

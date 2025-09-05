@@ -2,11 +2,11 @@
 // Created by Balaji Koneti
 
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
+import { PrismaService } from '@devatlas/db';
 import { Queue } from 'bullmq';
-import { createBullBoard } from '@bull-board/api';
-import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
-import { ExpressAdapter } from '@bull-board/express';
+// import { createBullBoard } from '@bull-board/api';
+// import { BullMQAdapter } from '@bull-board/api/bullMQAdapter';
+// import { ExpressAdapter } from '@bull-board/express';
 
 export interface GitHubWebhookPayload {
   action: string;
@@ -39,8 +39,8 @@ export class GitHubWebhookService {
   constructor(private prisma: PrismaService) {
     this.analysisQueue = new Queue('analysis', {
       connection: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: parseInt(process.env.REDIS_PORT || '6379'),
+        host: process.env['REDIS_HOST'] || 'localhost',
+        port: parseInt(process.env['REDIS_PORT'] || '6379'),
       },
     });
   }
@@ -76,7 +76,7 @@ export class GitHubWebhookService {
    * Handle push events
    */
   private async handlePush(payload: GitHubWebhookPayload): Promise<void> {
-    const { repository, sender } = payload;
+    const { repository } = payload;
 
     // Find projects that monitor this repository
     const projects = await this.findProjectsByRepository(repository.full_name);
@@ -88,7 +88,7 @@ export class GitHubWebhookService {
           trigger: 'webhook',
           triggerType: 'push',
           repository: repository.full_name,
-          commit: payload.head_commit?.id,
+          commit: (payload as any).head_commit?.id,
         });
       }
     }
@@ -101,7 +101,7 @@ export class GitHubWebhookService {
    * Handle pull request events
    */
   private async handlePullRequest(payload: GitHubWebhookPayload): Promise<void> {
-    const { repository, sender } = payload;
+    const { repository } = payload;
 
     // Find projects that monitor this repository
     const projects = await this.findProjectsByRepository(repository.full_name);
@@ -113,7 +113,7 @@ export class GitHubWebhookService {
           trigger: 'webhook',
           triggerType: 'pull_request',
           repository: repository.full_name,
-          pullRequest: payload.pull_request?.number,
+          pullRequest: (payload as any).pull_request?.number,
         });
       }
     }
@@ -123,7 +123,7 @@ export class GitHubWebhookService {
    * Handle issue events
    */
   private async handleIssue(payload: GitHubWebhookPayload): Promise<void> {
-    const { repository, sender } = payload;
+    const { repository } = payload;
 
     // Find projects that monitor this repository
     const projects = await this.findProjectsByRepository(repository.full_name);
@@ -135,7 +135,7 @@ export class GitHubWebhookService {
           trigger: 'webhook',
           triggerType: 'issue',
           repository: repository.full_name,
-          issue: payload.issue?.number,
+          issue: (payload as any).issue?.number,
         });
       }
     }
@@ -145,7 +145,7 @@ export class GitHubWebhookService {
    * Handle workflow run events
    */
   private async handleWorkflowRun(payload: GitHubWebhookPayload): Promise<void> {
-    const { repository, sender } = payload;
+    const { repository } = payload;
 
     // Find projects that monitor this repository
     const projects = await this.findProjectsByRepository(repository.full_name);
@@ -157,7 +157,7 @@ export class GitHubWebhookService {
           trigger: 'webhook',
           triggerType: 'workflow_run',
           repository: repository.full_name,
-          workflow: payload.workflow_run?.name,
+          workflow: (payload as any).workflow_run?.name,
         });
       }
     }
@@ -167,7 +167,7 @@ export class GitHubWebhookService {
    * Handle repository events
    */
   private async handleRepository(payload: GitHubWebhookPayload): Promise<void> {
-    const { repository, sender } = payload;
+    const { repository } = payload;
 
     // Find projects that monitor this repository
     const projects = await this.findProjectsByRepository(repository.full_name);
@@ -191,7 +191,7 @@ export class GitHubWebhookService {
    * Find projects that monitor a specific repository
    */
   private async findProjectsByRepository(repositoryFullName: string): Promise<any[]> {
-    const [owner, repo] = repositoryFullName.split('/');
+    const [owner] = repositoryFullName.split('/');
     
     // Find projects by owner (user or organization)
     const projects = await this.prisma.project.findMany({

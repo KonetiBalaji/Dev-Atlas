@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class IntegrationsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private readonly _prisma: PrismaService) {}
 
   /**
    * Get GitHub integration status

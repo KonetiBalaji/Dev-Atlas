@@ -7,11 +7,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateProjectDto {
   @ApiProperty({ example: 'octocat', description: 'GitHub username or organization name' })
   @IsString()
-  handle: string;
+  handle!: string;
 
   @ApiProperty({ example: 'user', enum: ['user', 'org'], description: 'Type of GitHub entity' })
   @IsIn(['user', 'org'])
-  type: string;
+  type!: string;
 
   @ApiProperty({ example: 'idle', description: 'Initial project status', required: false })
   @IsOptional()

@@ -77,9 +77,9 @@ export default function SettingsPage() {
               </div>
               <div>
                 <Label htmlFor="role">Role</Label>
-                <Select defaultValue={profile?.role || 'viewer'}>
+                <Select defaultValue={profile?.role || 'viewer'} onValueChange={() => {}}>
                   <SelectTrigger>
-                    <SelectValue />
+                    <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="viewer">Viewer</SelectItem>

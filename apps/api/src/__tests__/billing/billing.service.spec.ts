@@ -2,7 +2,7 @@
 // Created by Balaji Koneti
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { BillingService } from '../billing.service';
+import { BillingService } from '../../billing/billing.service';
 import { ConfigService } from '@nestjs/config';
 import Stripe from 'stripe';
 
@@ -76,7 +76,7 @@ describe('BillingService', () => {
         url: 'https://checkout.stripe.com/c/pay/cs_test_123',
       };
 
-      mockStripe.checkout.sessions.create.mockResolvedValue(mockSession as any);
+      (mockStripe.checkout.sessions.create as jest.Mock).mockResolvedValue(mockSession);
 
       const result = await service.createCheckoutSession({
         orgId: 'org_123',
@@ -110,7 +110,7 @@ describe('BillingService', () => {
         url: 'https://billing.stripe.com/session/bps_test_123',
       };
 
-      mockStripe.billingPortal.sessions.create.mockResolvedValue(mockSession as any);
+      (mockStripe.billingPortal.sessions.create as jest.Mock).mockResolvedValue(mockSession);
 
       const result = await service.createCustomerPortalSession('customer_123');
 
@@ -130,7 +130,7 @@ describe('BillingService', () => {
         current_period_end: 1234567890,
       };
 
-      mockStripe.subscriptions.retrieve.mockResolvedValue(mockSubscription as any);
+      (mockStripe.subscriptions.retrieve as jest.Mock).mockResolvedValue(mockSubscription);
 
       const result = await service.getSubscription('sub_123');
 
@@ -152,7 +152,7 @@ describe('BillingService', () => {
         ],
       };
 
-      mockStripe.invoices.list.mockResolvedValue(mockInvoices as any);
+      (mockStripe.invoices.list as jest.Mock).mockResolvedValue(mockInvoices);
 
       const result = await service.getInvoices('customer_123');
 

@@ -125,7 +125,7 @@ export class EnterpriseController {
   @Post('sso/test')
   @ApiOperation({ summary: 'Test SSO connection' })
   @ApiResponse({ status: 200, description: 'SSO connection tested successfully' })
-  async testSSOConnection(@Body() body: { provider: string }, @Request() req: any) {
+  async testSSOConnection(@Body() body: { provider: string }, @Request() _req: any) {
     return this.enterpriseService.testSSOConnection(body.provider);
   }
 }

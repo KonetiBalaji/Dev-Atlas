@@ -138,7 +138,7 @@ export function Dashboard() {
                 onValueChange={(value) => setNewProject({ ...newProject, type: value })}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="user">User</SelectItem>

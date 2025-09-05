@@ -2,14 +2,14 @@
 // Created by Balaji Koneti
 
 import { Test, TestingModule } from '@nestjs/testing';
-import { EnterpriseService } from '../enterprise.service';
+import { EnterpriseService } from '../../enterprise/enterprise.service';
 import { PrismaService } from '@devatlas/db';
-import { AuditLogger } from '@devatlas/enterprise';
+// import { AuditLogger } from '@devatlas/enterprise';
 
 describe('EnterpriseService', () => {
   let service: EnterpriseService;
   let mockPrisma: jest.Mocked<PrismaService>;
-  let mockAuditLogger: jest.Mocked<AuditLogger>;
+  // let mockAuditLogger: jest.Mocked<AuditLogger>;
 
   beforeEach(async () => {
     mockPrisma = {
