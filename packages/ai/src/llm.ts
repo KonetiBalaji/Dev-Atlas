@@ -3,7 +3,7 @@
 
 import OpenAI from 'openai';
 import axios from 'axios';
-import { LLMProvider, ModelConfig, LLMRequest, LLMResponse } from './types';
+import { LLMRequest, LLMResponse } from './types';
 
 export class LLMService {
   private openai?: OpenAI;
