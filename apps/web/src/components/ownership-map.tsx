@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+// import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 interface OwnershipData {
   path: string;
@@ -69,7 +69,7 @@ export function OwnershipMap({ ownershipData, repoName }: OwnershipMapProps) {
       const leafPath = parts.slice(0, -1).join('/');
       const leafName = parts[parts.length - 1];
       if (leafPath) {
-        const leafParent = tree[parts[0]];
+        let leafParent = tree[parts[0]];
         for (let i = 1; i < parts.length - 1; i++) {
           leafParent = leafParent.children[parts[i]];
         }
@@ -198,7 +198,7 @@ export function OwnershipMap({ ownershipData, repoName }: OwnershipMapProps) {
                 <div className="space-y-3">
                   {selectedData.authors
                     .sort((a, b) => b.percentage - a.percentage)
-                    .map((author, index) => (
+                    .map((author, _index) => (
                     <div key={author.author} className="flex items-center space-x-3">
                       <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-medium">
                         {author.author.charAt(0).toUpperCase()}

@@ -21,7 +21,7 @@ interface ProjectsGridProps {
   onRefresh: () => void;
 }
 
-export function ProjectsGrid({ projects, onRefresh }: ProjectsGridProps) {
+export function ProjectsGrid({ projects, onRefresh: _onRefresh }: ProjectsGridProps) {
   if (projects.length === 0) {
     return (
       <Card>

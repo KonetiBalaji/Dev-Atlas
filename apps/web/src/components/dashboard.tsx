@@ -117,7 +117,7 @@ export function Dashboard() {
         <CardHeader>
           <CardTitle>Add New Project</CardTitle>
           <CardDescription>
-            Analyze a GitHub user or organization's repositories
+            Analyze a GitHub user or organization&apos;s repositories
           </CardDescription>
         </CardHeader>
         <CardContent>

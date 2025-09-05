@@ -14,7 +14,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { Settings, User, Shield, Bell, Database, Key } from 'lucide-react';
 import { api } from '@/lib/api';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState('profile');

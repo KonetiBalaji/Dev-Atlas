@@ -5,11 +5,11 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+// import { Badge } from '@/components/ui/badge';
 import { api } from '@/lib/api';
 
 export function AnalysesList() {
-  const { data: analyses = [], isLoading } = useQuery({
+  const { data: _analyses = [], isLoading } = useQuery({
     queryKey: ['analyses'],
     queryFn: () => api.analyses.getStats(),
   });
