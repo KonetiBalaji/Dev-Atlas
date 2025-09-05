@@ -1,0 +1,45 @@
+# DevAtlas Python Development Dependencies
+# Created by Balaji Koneti
+#
+# This file contains additional Python dependencies for development
+# and testing of the analysis pipeline
+
+# Include base requirements
+-r requirements.txt
+
+# Development Tools
+ipython>=8.0.0                 # Enhanced interactive Python shell
+jupyter>=1.0.0                 # Jupyter notebook environment
+notebook>=6.5.0                # Jupyter notebook server
+
+# Testing and Quality
+pytest-xdist>=3.0.0           # Parallel test execution
+pytest-mock>=3.10.0           # Mocking utilities for pytest
+pytest-asyncio>=0.21.0        # Async support for pytest
+hypothesis>=6.0.0              # Property-based testing
+factory-boy>=3.2.0             # Test data generation
+
+# Code Quality and Linting
+pre-commit-hooks>=4.4.0       # Pre-commit hooks
+flake8-docstrings>=1.7.0      # Docstring linting
+flake8-import-order>=0.18.0   # Import order checking
+flake8-bugbear>=23.0.0        # Additional flake8 plugins
+
+# Documentation
+mkdocs>=1.4.0                  # Static site generator
+mkdocs-material>=9.0.0        # Material theme for MkDocs
+mkdocs-mermaid2-plugin>=1.0.0 # Mermaid diagrams support
+
+# Performance and Profiling
+memory-profiler>=0.60.0       # Memory usage profiler
+line-profiler>=4.0.0          # Line-by-line profiler
+py-spy>=0.3.14                # Sampling profiler
+
+# Security
+bandit[toml]>=1.7.0           # Security linter with TOML support
+semgrep>=1.0.0                # Static analysis security scanner
+
+# Utilities
+rich>=13.0.0                  # Rich text and beautiful formatting
+typer>=0.9.0                  # Modern CLI framework
+python-dotenv>=1.0.0          # Environment variable management

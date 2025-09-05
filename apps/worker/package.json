@@ -1,0 +1,32 @@
+{
+  "name": "@devatlas/worker",
+  "version": "1.0.0",
+  "description": "DevAtlas Background Worker Service",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "start:dev": "tsx watch src/main.ts",
+    "dev": "tsx watch src/main.ts",
+    "lint": "eslint src --ext .ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@devatlas/db": "workspace:*",
+    "@devatlas/ai": "workspace:*",
+    "@devatlas/analyzer": "workspace:*",
+    "bullmq": "^4.15.0",
+    "ioredis": "^5.3.0",
+    "simple-git": "^3.20.0",
+    "octokit": "^2.0.0",
+    "fs-extra": "^11.2.0",
+    "pino": "^8.17.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@types/node": "^20.10.0",
+    "@types/fs-extra": "^11.0.4",
+    "tsx": "^4.6.0"
+  }
+}

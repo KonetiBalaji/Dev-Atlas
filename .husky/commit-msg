@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# DevAtlas Commit Message Hook
+# Created by Balaji Koneti
+
+npx --no -- commitlint --edit ${1}
