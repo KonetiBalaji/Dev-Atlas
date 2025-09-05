@@ -16,7 +16,7 @@ export default function BillingPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch subscription data
-  const { data: subscription, refetch } = useQuery({
+  const { data: subscription } = useQuery({
     queryKey: ['subscription'],
     queryFn: api.billing.getSubscription,
   });
