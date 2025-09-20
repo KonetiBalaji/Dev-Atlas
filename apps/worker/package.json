@@ -1,0 +1,30 @@
+{
+  "name": "worker",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start:dev": "nest start --watch"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.3.3",
+    "@nestjs/core": "^10.3.3",
+    "@nestjs/bullmq": "^10.1.1",
+    "bullmq": "^5.7.8",
+    "db": "workspace:*",
+    "ai": "workspace:*",
+    "types": "workspace:*",
+    "simple-git": "^3.24.0",
+    "cloc": "^2.10.0",
+    "eslint": "^9.0.0",
+    "@prisma/client": "^5.9.1",
+    "openai": "^4.28.0",
+    "axios": "^1.6.8",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10",
+    "minimatch": "^9.0.3"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.3.2",
+    "typescript": "^5.4.2"
+  }
+}
