@@ -43,19 +43,24 @@
 
 ---
 
-## Vision & Use Cases
+## Vision & Guiding Principles
 
-**DevAtlas** helps hiring managers, recruiters, and engineering leaders quickly understand a developer and their repositories through:
+**Our vision** is to create the definitive platform for understanding the DNA of a codebase and the developers behind it. DevAtlas is engineered to be a beautiful, intuitive, and enterprise-grade tool that delivers deep, actionable insights with unparalleled clarity and transparency.
 
-* **Clear summaries** of repos/modules, **ownership maps**, and **quality/security metrics**.
-* A **transparent score** (0–100) backed by reproducible metrics—*not* a black box.
-* **Actionable advice** to improve craft, reliability, docs, and security.
+**Our principles** reflect a commitment to mature, industry-leading standards:
 
-**Primary use cases**
+*   **Craftsmanship & Quality:** We build robust, maintainable, and well-tested software. We have a zero-tolerance policy for architectural drift and a high bar for code quality, enforced through rigorous CI/CD gates.
+*   **Transparency & Trust:** Our analysis and scoring are fully transparent and reproducible. We avoid "black box" algorithms, empowering users to understand and trust the insights provided.
+*   **Actionable Insights:** Data is only as valuable as the actions it inspires. Every metric and summary is designed to lead to concrete improvements in security, reliability, documentation, and developer craft.
+*   **Security by Design:** The platform is built on a foundation of security, from dependency scanning and secret detection to tenant isolation and the principle of least privilege.
+*   **Beautiful & Intuitive UX:** An enterprise tool should be a pleasure to use. We are committed to a polished, responsive, and intuitive user experience that makes complex data easy to navigate and understand.
 
-* Recruiters: pre-screen GitHub candidates with evidence from real work.
-* Managers: understand a new hire’s repo landscape and strengths.
-* Dev teams: continuous repo health insights and contributor impact.
+## Use Cases
+
+*   **Recruiters:** Pre-screen GitHub candidates with objective evidence from their real work.
+*   **Managers:** Onboard new hires faster by understanding their repo landscape and strengths.
+*   **Dev Teams:** Gain continuous repo health insights and measure contributor impact.
+*   **Architects:** Identify tech debt, complexity hotspots, and opportunities for refactoring.
 
 ---
 
@@ -114,9 +119,9 @@
 
 * **Frontend**: Next.js (App Router), shadcn/ui, TanStack Query, Zod, React Hook Form.
 * **Backend**: NestJS (REST), Prisma ORM, Postgres (Neon/Supabase-compatible), Redis (queues), MinIO/S3.
-* **Analysis**: Node & Python toolchain, `eslint`, `ruff`, `bandit`, `npm audit`/`yarn audit`, `pip-audit`, custom secret scan.
-* **AI**: LLM gateway (OpenAI, local via Ollama), embeddings (text-embedding-3\* or local), **pgvector**.
-* **Infra**: Docker Compose (dev), Terraform (cloud), GitHub Actions (CI), Sentry + OpenTelemetry.
+* **Analysis**: Polyglot toolchain (Node, Python), `tree-sitter` for AST-level analysis, `eslint`, `ruff`, `bandit`, `Trivy` for vulnerability/SBOM, `pip-audit`, custom secret scanning.
+* **AI**: LLM gateway (OpenAI, fine-tuned models), local models via Ollama, embeddings (e.g., `text-embedding-3-small`), **pgvector** for semantic search.
+* **Infra**: Docker Compose (dev), Terraform (IaC), Kubernetes (prod scaling), GitHub Actions (CI/CD), Sentry (error monitoring), OpenTelemetry (observability).
 * **Billing**: Stripe (Checkout + webhooks).
 
 ---
@@ -126,19 +131,28 @@
 ```
 /devatlas
 ├─ apps/
-│  ├─ web/                 # Next.js frontend
-│  ├─ api/                 # NestJS REST API
-│  └─ worker/              # Queue consumers & analyzers
+│  ├─ web/                 # Next.js Frontend: The main user interface, built with Next.js and shadcn/ui.
+│  ├─ api/                 # NestJS API: The core backend service handling business logic, auth, and database access.
+│  └─ worker/              # Background Workers: Consumers for our job queue (Redis), running intensive analysis tasks.
 ├─ packages/
-│  ├─ db/                  # Prisma schema & migrations
-│  ├─ ai/                  # Prompt templates, model router
-│  ├─ analyzer/            # Shared analyzers (JS/TS), runners
-│  └─ config/              # eslint, tsconfig, prettier, commitlint
+│  ├─ ui/                  # Shared React UI components used across apps.
+│  ├─ db/                  # Database: Prisma schema, migrations, and seeding scripts for PostgreSQL.
+│  ├─ ai/                  # AI Core: LLM prompt templates, model routing, and embedding logic.
+│  ├─ analyzer/            # Analysis Engine: The polyglot static analysis tools and runners.
+│  ├─ config/              # Shared Configurations: Centralized configs for ESLint, TypeScript, Prettier, etc.
+│  └─ types/               # Shared Types: TypeScript definitions and interfaces used across the monorepo.
 ├─ infra/
-│  ├─ docker/              # docker-compose, Dockerfiles
-│  └─ terraform/           # optional IaC for cloud
-├─ .github/workflows/      # CI pipelines
-└─ README.md
+│  ├─ docker/              # Docker configurations for local development (docker-compose) and production.
+│  └─ terraform/           # Infrastructure as Code (IaC) for provisioning cloud resources (e.g., AWS, GCP).
+├─ docs/
+│  ├─ adr/                 # Architectural Decision Records.
+│  └─ runbooks/            # Operational guides for SRE and developers.
+├─ scripts/                 # Utility and automation scripts (e.g., release, data migration).
+├─ .github/
+│  └─ workflows/           # CI/CD pipelines for testing, building, and deploying (GitHub Actions).
+├─ .gitignore               # Specifies intentionally untracked files to ignore.
+├─ LICENSE                  # Project software license (Apache-2.0).
+└─ README.md                # This file: the entry point for understanding the project.
 ```
 
 ---
@@ -586,10 +600,32 @@ POST   /v1/search                             # semantic query over embeddings
 
 ## Roadmap
 
-* **v1.0**: repo-level summaries, static checks, scoring, org multi-tenancy, Stripe.
-* **v1.1**: ownership map, semantic Q\&A, PDF reporting, custom weight profiles.
-* **v1.2**: coverage parsing, flaky test detection, SBOM & license policy.
-* **v2.0**: team analytics over time, JIRA/GitLab integrations, SSO (SAML/OIDC).
+Our roadmap is phased to deliver incremental value while building towards a comprehensive, enterprise-ready platform.
+
+*   **Phase 1 (v1.0 - Foundation):**
+    *   Core repo ingestion and analysis pipeline.
+    *   Static checks (lint, complexity), security scanning (SAST, dependencies).
+    *   Initial transparent scoring rubric and multi-tenant architecture.
+    *   Stripe integration for billing.
+
+*   **Phase 2 (v1.1 - Deeper Insights):**
+    *   Advanced ownership mapping and contributor analysis.
+    *   Semantic Q&A over codebases using vector search.
+    *   Customizable scoring profiles and PDF/HTML reporting.
+    *   Automated documentation quality analysis and README generation.
+
+*   **Phase 3 (v1.2 - Enterprise Readiness):**
+    *   Test coverage parsing and flaky test detection.
+    *   SBOM generation and license compliance policies.
+    *   Advanced security features: secret scanning history and remediation advice.
+    *   Deeper CI/CD integration for quality gating.
+
+*   **Phase 4 (v2.0 - Ecosystem & AI):**
+    *   Longitudinal analytics: track codebase and team metrics over time.
+    *   Deep integrations: JIRA, GitLab, Slack, and VS Code/JetBrains IDEs.
+    *   Enterprise security: SSO (SAML/OIDC), audit logs, and advanced role-based access control.
+    *   AI-powered recommendations: automated refactoring suggestions, security fixes, and documentation improvements.
+
 
 ---
 
