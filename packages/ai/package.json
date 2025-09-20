@@ -1,0 +1,13 @@
+{
+  "name": "ai",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "dependencies": {
+    "openai": "^4.33.0",
+    "axios": "^1.6.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.2"
+  }
+}

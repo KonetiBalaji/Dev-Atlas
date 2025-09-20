@@ -1,0 +1,121 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [pgvector]
+}
+
+model Org {
+  id        String    @id @default(cuid())
+  name      String
+  stripeId  String?   @unique
+  users     User[]
+  projects  Project[]
+  createdAt DateTime  @default(now())
+}
+
+model User {
+  id        String   @id @default(cuid())
+  orgId     String
+  org       Org      @relation(fields: [orgId], references: [id])
+  email     String   @unique
+  name      String?
+  role      Role     @default(VIEWER)
+  provider  String   @default("github")
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+model Project {
+  id        String     @id @default(cuid())
+  orgId     String
+  org       Org        @relation(fields: [orgId], references: [id])
+  handle    String
+  type      String
+  status    String     @default("idle")
+  analyses  Analysis[]
+  createdAt DateTime   @default(now())
+}
+
+model Analysis {
+  id         String    @id @default(cuid())
+  projectId  String
+  project    Project   @relation(fields: [projectId], references: [id])
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
+  status     String    @default("queued")
+  summary    String?
+  score      Score?
+  repos      Repo[]
+}
+
+model Repo {
+  id           String      @id @default(cuid())
+  analysisId   String
+  analysis     Analysis    @relation(fields: [analysisId], references: [id])
+  name         String
+  url          String
+  stars        Int         @default(0)
+  forks        Int         @default(0)
+  language     String?
+  loc          Int         @default(0)
+  hasTests     Boolean     @default(false)
+  hasCI        Boolean     @default(false)
+  readmeScore  Int         @default(0)
+  lintIssues   Int         @default(0)
+  complexity   Float?
+  vulnCount    Int         @default(0)
+  secretsFound Int         @default(0)
+  summary      String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  ownership    Ownership[]
+  embeddings   Embedding[]
+}
+
+model Ownership {
+  id        String   @id @default(cuid())
+  repoId    String
+  repo      Repo     @relation(fields: [repoId], references: [id])
+  path      String
+  author    String
+  share     Float
+  createdAt DateTime @default(now())
+}
+
+model Score {
+  id            String    @id @default(cuid())
+  analysisId    String    @unique
+  analysis      Analysis  @relation(fields: [analysisId], references: [id])
+  overall       Int
+  craft         Int
+  reliability   Int
+  documentation Int
+  security      Int
+  impact        Int
+  collaboration Int
+  details       Json
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Embedding {
+  id        String   @id @default(cuid())
+  repoId    String
+  repo      Repo     @relation(fields: [repoId], references: [id])
+  path      String
+  kind      String
+  vector    Unsupported("vector(1536)")
+  text      String
+  createdAt DateTime @default(now())
+}
